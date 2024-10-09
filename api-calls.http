@@ -1,0 +1,28 @@
+### POST create an account
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+    "document_number": "12345678900"
+}
+
+### GET retrieve the account information
+GET http://localhost:8080/accounts/1
+Content-Type: application/json
+
+{
+    "account_id": 1,
+    "document_number": "12345678900"
+}
+
+### POST create a transaction
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+    "account_id": 1,
+    "operation_type_id": 4,
+    "amount": 120.45,
+    "event_date": "2020-01-01T10:32:07.7199222"
+}
+
