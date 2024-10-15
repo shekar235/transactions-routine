@@ -34,8 +34,20 @@ func (s *TransactionService) CreateTransaction(accountID, operationTypeID int64,
 		AccountID:       account.AccountID,
 		OperationTypeID: operationTypeID,
 		Amount:          amount,
+		Balance:         amount,
 		EventDate:       eventDate,
 	}
+
+	if amount > 0 {
+		// update existing transaction
+		amount, err = s.transactionRepo.UpdateTransaction(transaction)
+		if err != nil {
+			return transaction, err
+		}
+	}
+
+	// new amount
+	transaction.Balance = amount
 
 	err = s.transactionRepo.CreateTransaction(transaction)
 	return transaction, err

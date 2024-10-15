@@ -32,6 +32,33 @@ func (m *MockTransactionRepository) CreateTransaction(transaction *models.Transa
 	return nil
 }
 
+// CreateTransaction creates a new transaction in the mock repository
+func (m *MockTransactionRepository) UpdateTransaction(transaction *models.Transaction) (float64, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	amount := transaction.Amount
+	for id, trx := range m.Transactions {
+
+		//filter
+		if trx.AccountID == transaction.AccountID && trx.Balance < 0 {
+			if amount == 0 { //basecase
+				return 0, nil
+			}
+
+			if -trx.Amount < amount { // on more balance
+				trx.Balance = 0
+				amount = trx.Balance + amount
+			} else { // on less balance
+				trx.Balance = trx.Balance + amount
+				amount = 0
+			}
+			m.Transactions[id] = trx
+		}
+	}
+	return amount, nil
+}
+
 // GetTransactionByID retrieves a transaction by ID from the mock repository
 func (m *MockTransactionRepository) GetTransactionByID(transactionID int64) (*models.Transaction, error) {
 	m.mu.Lock()

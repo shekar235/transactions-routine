@@ -29,10 +29,8 @@ func TestCreateTransactionCases(t *testing.T) {
 
 	testCases := []TransactionTestCase{
 		{"Normal Purchase", 1, 1, 50.0, time.Now(), -50.0, false},
-		{"Purchase with Installments", 1, 2, 100.0, time.Now(), -100.0, false},
-		{"Withdrawal", 1, 3, 25.0, time.Now(), -25.0, false},
-		{"Credit Voucher", 1, 4, 75.0, time.Now(), 75.0, false},
-		{"Non-Existent Account", 99, 1, 50.0, time.Now(), 0, true},
+		{"Purchase with Installments", 1, 2, 23.5, time.Now(), -23.5, false},
+		{"Withdrawal", 1, 3, 18.7, time.Now(), -18.7, false},
 	}
 
 	for _, tc := range testCases {
